@@ -1,5 +1,6 @@
 const docx = require('docx');
 const fs = require('fs');
+const Stylist = require('./stylist');
 
 const {
     Document,
@@ -11,7 +12,7 @@ class Writer {
 
     constructor() {
         this.content = [];
-        this.paragraphStyles = [];
+        this.stylist = new Stylist('style.json');
     }
 
     save(filename) {
@@ -33,16 +34,12 @@ class Writer {
                 children: this.content,
             }],
             styles: {
-                paragraphStyles: this.paragraphStyles,
+                paragraphStyles: this.stylist.getParagraphStyles(),
             }
         });
         Packer.toBuffer(doc).then((buffer) => {
             fs.writeFileSync(filename, buffer);
         });
-    }
-
-    addParagraphStyle(style) {
-        this.paragraphStyles.push(style);
     }
 
     h1(text) {
