@@ -12,7 +12,7 @@ class Writer {
 
     constructor() {
         this.content = [];
-        this.stylist = new Stylist('style.json');
+        this.stylist = new Stylist('./docx/style.json');
     }
 
     save(filename) {

@@ -1,4 +1,4 @@
-const parseJson = require("./utils/parser");
+const parseJson = require("./utils/parseJson");
 const docx = require("docx");
 const getRealPound = require("./utils/pound");
 
