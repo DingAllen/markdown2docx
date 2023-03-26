@@ -37,6 +37,8 @@ class Writer {
                 paragraphStyles: this.stylist.getParagraphStyles(),
             }
         });
+
+
         Packer.toBuffer(doc).then((buffer) => {
             fs.writeFileSync(filename, buffer);
         });

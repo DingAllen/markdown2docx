@@ -77,9 +77,20 @@ class Stylist {
                         break;
                     case "字号":
                         style.run.size = getRealPound(property) * 2;
+                        // 如果此时存在首行缩进格式，就需要重新计算首行缩进的值
+                        if (style.paragraph.indent && style.paragraph.indent.firstLine) {
+                            style.paragraph.indent = {
+                                firstLine: style.run.size * property * 10,
+                            };
+                        }
                         break;
                     case "加粗":
                         style.run.bold = property;
+                        break;
+                    case "居中":
+                        if (property === true) {
+                            style.paragraph.alignment = docx.AlignmentType.CENTER;
+                        }
                         break;
                     case "行间距":
                         style.paragraph.spacing.line = getRealPound(property) * 20;
@@ -93,6 +104,11 @@ class Stylist {
                         break;
                     case "段后":
                         style.paragraph.spacing.after = getRealPound(property) * 20;
+                        break;
+                    case "首行缩进": // 特殊格式，首行缩进，以字符为单位
+                        style.paragraph.indent = {
+                            firstLineChars: property * 100,
+                        };
                         break;
                     default:
                         console.log(`未知的样式属性：${name}`);
